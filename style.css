@@ -994,4 +994,66 @@ a {
     flex-direction: column;
     gap: 8px;
   }
+}/* SUBTLE PAGE ANIMATION */
+
+body {
+  animation: pageFadeIn 0.7s ease both;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* HERO ENTRANCE */
+
+.hero-copy,
+.hero-image,
+.journal-sticky,
+.journal-list,
+.collection-hero,
+.collection-grid,
+.artwork-info,
+.artwork-slider,
+.about-content,
+.about-image,
+.contact-content {
+  animation: softEnter 0.9s ease both;
+}
+
+.hero-image,
+.journal-list,
+.collection-grid,
+.artwork-slider,
+.about-image {
+  animation-delay: 0.12s;
+}
+
+@keyframes softEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* IMAGE HOVER */
+
+.work-card img,
+.collection-work img,
+.archive-image img {
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+.work-card:hover img,
+.collection-work:hover img,
+.archive-image:hover img {
+  transform: scale(1.015);
 }
