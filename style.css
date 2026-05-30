@@ -594,9 +594,9 @@ a {
 }
 
 .about-image img {
-  width: 100%;
-  max-height: calc(100vh - 180px);
-  object-fit: cover;
+    width: 100%;
+    max-height: calc(100vh - 180px);
+    object-fit: contain;
 }
 
 .about-page-with-image .about-content {
