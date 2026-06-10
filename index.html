@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
- <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
-<link rel="apple-touch-icon" href="favicon-180.png">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+  <link rel="apple-touch-icon" href="favicon-180.png">
 
   <title>Ümit Sural — Artist</title>
   <meta name="description" content="Ümit Sural is a multidisciplinary contemporary artist based between Barcelona and Paris, working across painting, sculpture, photography and image-making.">
@@ -21,15 +22,15 @@
 <body>
 
 <nav class="nav">
-  <a href="index.html" class="nav-logo">Ümit Sural</a>
+  <a href="index.html" class="nav-logo">Ümit S U  R  A  L</a>
 
-    <div class="nav-links">
-  <a href="works.html">Works</a>
-  <a href="journal.html">Journal</a>
-  <a href="about.html">About</a>
-  <a href="contact.html">Contact</a>
-</div>
-  </nav>
+  <div class="nav-links">
+    <a href="works.html">Works</a>
+    <a href="journal.html">Journal</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
 
 <header class="hero">
   <div class="hero-copy">
@@ -47,7 +48,7 @@
   </div>
 
   <div class="hero-image">
-    <img src="assets/images/hero.jpg" alt="Artwork by Ümit Sural">
+    <img id="heroRandomImage" src="assets/images/muscle-memory/escaping-mind-main.webp" alt="Escaping Mind by Ümit Sural">
   </div>
 </header>
 
@@ -124,6 +125,45 @@
   </div>
 
 </footer>
+
+<script>
+  const heroImages = [
+    {
+      src: "assets/images/muscle-memory/escaping-mind-main.webp",
+      alt: "Escaping Mind by Ümit Sural"
+    },
+    {
+      src: "assets/images/muscle-memory/insensitivity-to-smell-main.webp",
+      alt: "Insensitivity to Smell by Ümit Sural"
+    },
+    {
+      src: "assets/images/muscle-memory/ruthless-conformity-main.webp",
+      alt: "Ruthless Conformity by Ümit Sural"
+    },
+    {
+      src: "assets/images/muscle-memory/internalized-oppression-main.webp",
+      alt: "Internalized Oppression by Ümit Sural"
+    },
+    {
+      src: "assets/images/muscle-memory/fear-pushes-hope-main.webp",
+      alt: "Fear Pushes Hope by Ümit Sural"
+    },
+    {
+      src: "assets/images/muscle-memory/factory-farmed-consciousness-main.webp",
+      alt: "Factory-Farmed Consciousness by Ümit Sural"
+    },
+    {
+      src: "assets/images/muscle-memory/safe-house-main.webp",
+      alt: "Safe House by Ümit Sural"
+    }
+  ];
+
+  const heroImage = document.getElementById("heroRandomImage");
+  const randomArtwork = heroImages[Math.floor(Math.random() * heroImages.length)];
+
+  heroImage.src = randomArtwork.src;
+  heroImage.alt = randomArtwork.alt;
+</script>
 
 </body>
 </html>

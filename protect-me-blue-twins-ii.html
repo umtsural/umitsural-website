@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+  <link rel="apple-touch-icon" href="favicon-180.png">
+
+  <title>Blue Twins II — Ümit Sural</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav class="nav">
+
+  <a href="index.html" class="nav-logo">
+    Ümit S U R A L
+  </a>
+
+  <div class="nav-links">
+    <a href="works.html">Works</a>
+    <a href="journal.html">Journal</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+</nav>
+
+<main class="artwork-page">
+
+  <section class="artwork-layout">
+
+    <aside class="artwork-info">
+
+      <div>
+
+        <p class="archive-label">
+          Protect Me
+        </p>
+
+        <h1>
+          Blue Twins II
+        </h1>
+
+      </div>
+
+      <div class="artwork-meta">
+
+        <p>
+          2021<br>
+          Acrylic and mesh on canvas<br>
+          50 × 70 cm
+        </p>
+
+        <p class="artwork-text">
+          Part of the Protect Me series, exploring vulnerability,
+          emotional protection and the fragile boundaries between
+          concealment and exposure through layered surfaces and
+          translucent structures.
+        </p>
+
+      </div>
+
+      <div class="artwork-navigation">
+
+        <a href="protect-me.html">
+          Back to collection
+        </a>
+
+      </div>
+
+    </aside>
+
+    <section class="artwork-slider">
+
+      <img
+        src="assets/images/protect-me/blue-twins-ii-main.webp"
+        alt="Blue Twins II by Ümit Sural"
+        class="active"
+      >
+
+      <img
+        src="assets/images/protect-me/blue-twins-ii-detail-01.webp"
+        alt=""
+      >
+
+      <img
+        src="assets/images/protect-me/blue-twins-ii-detail-02.webp"
+        alt=""
+      >
+
+
+      <div class="slider-controls">
+
+        <button id="prevBtn">
+          Previous
+        </button>
+
+        <span id="sliderCount">
+          01 / 05
+        </span>
+
+        <button id="nextBtn">
+          Next
+        </button>
+
+      </div>
+
+    </section>
+
+  </section>
+
+</main>
+
+<script>
+
+const slides = document.querySelectorAll('.artwork-slider img');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const counter = document.getElementById('sliderCount');
+
+let currentSlide = 0;
+
+function updateSlider() {
+
+  slides.forEach(slide =>
+    slide.classList.remove('active')
+  );
+
+  slides[currentSlide].classList.add('active');
+
+  const current =
+    String(currentSlide + 1).padStart(2, '0');
+
+  const total =
+    String(slides.length).padStart(2, '0');
+
+  counter.textContent =
+    `${current} / ${total}`;
+}
+
+nextBtn.addEventListener('click', () => {
+
+  currentSlide++;
+
+  if (currentSlide >= slides.length) {
+    currentSlide = 0;
+  }
+
+  updateSlider();
+
+});
+
+prevBtn.addEventListener('click', () => {
+
+  currentSlide--;
+
+  if (currentSlide < 0) {
+    currentSlide = slides.length - 1;
+  }
+
+  updateSlider();
+
+});
+
+updateSlider();
+
+</script>
+
+</body>
+</html>
