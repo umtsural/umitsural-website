@@ -89,6 +89,47 @@ a {
   letter-spacing: 0.14em;
 }
 
+.editorial-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  background: #f5f0eb;
+  opacity: 1;
+  animation: editorial-intro-background 1.25s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.editorial-intro[hidden] {
+  display: none;
+}
+
+.editorial-intro .nav-logo {
+  display: block;
+  opacity: 0;
+  transform: scale(1);
+  animation: editorial-intro-logo 1.25s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  will-change: transform, opacity;
+}
+
+body.is-intro-playing {
+  pointer-events: none;
+}
+
+@keyframes editorial-intro-logo {
+  0% { opacity: 0; transform: scale(1); }
+  12% { opacity: 1; transform: scale(1); }
+  48% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(3); }
+}
+
+@keyframes editorial-intro-background {
+  0%, 52% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 .nav-links {
   display: flex;
   gap: 40px;
@@ -1008,14 +1049,25 @@ a {
 
 @media (max-width: 600px) {
   .nav {
-    align-items: flex-start;
+    align-items: center;
     gap: 18px;
     flex-direction: column;
+    padding-left: 4vw;
+    padding-right: 4vw;
+    text-align: center;
+  }
+
+  .nav-logo {
+    align-self: center;
+    line-height: 1;
   }
 
   .nav-links {
     gap: 20px;
     flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
   }
 
   .hero h1 {
@@ -1073,6 +1125,12 @@ a {
   font-size:13px;
   line-height:1.8;
   color:rgba(28,26,23,.65);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .editorial-intro {
+    display: none;
+  }
 }
 
 /* STUDIO NOTES */
@@ -2006,5 +2064,95 @@ body {
 
   .living-archive-item img {
     max-height: none;
+  }
+
+  .living-archive.is-mobile-composition {
+    height: 230vh;
+    min-height: 1500px;
+    padding: 0;
+    overflow: clip;
+  }
+
+  .living-archive.is-mobile-composition .living-archive-sticky {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    min-height: 620px;
+    overflow: clip;
+  }
+
+  .living-archive.is-mobile-composition .living-archive-heading {
+    position: absolute;
+    top: 94px;
+    left: 6vw;
+    margin: 0;
+    z-index: 40;
+    pointer-events: none;
+  }
+
+  .living-archive.is-mobile-composition .living-archive-heading h2 {
+    font-size: clamp(42px, 14vw, 58px);
+  }
+
+  .living-archive.is-mobile-composition .living-archive-field {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    min-height: 0;
+  }
+
+  .living-archive.is-mobile-composition .living-archive-item:nth-child(n) {
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin: 0;
+    max-width: none;
+    grid-column: auto;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none;
+    will-change: auto;
+  }
+
+  .living-archive.is-mobile-composition .living-archive-item img {
+    width: 100%;
+    height: auto;
+    max-height: 58svh;
+    object-fit: contain;
+  }
+
+  .living-archive.is-mobile-composition .living-archive-item:nth-child(1) { width: 74vw; left: -4vw; top: 28%; }
+  .living-archive.is-mobile-composition .living-archive-item:nth-child(2) { width: 52vw; left: 48vw; top: 18%; }
+  .living-archive.is-mobile-composition .living-archive-item:nth-child(3) { width: 32vw; left: 5vw; top: 8%; }
+  .living-archive.is-mobile-composition .living-archive-item:nth-child(4) { width: 50vw; left: 2vw; top: 49%; }
+  .living-archive.is-mobile-composition .living-archive-item:nth-child(5) { width: 28vw; left: 68vw; top: 7%; }
+  .living-archive.is-mobile-composition .living-archive-item:nth-child(6) { width: 70vw; left: 37vw; top: 31%; }
+  .living-archive.is-mobile-composition .living-archive-item:nth-child(7) { width: 48vw; left: 10vw; top: 16%; }
+  .living-archive.is-mobile-composition .living-archive-item:nth-child(8) { width: 34vw; left: 58vw; top: 61%; }
+  .living-archive.is-mobile-composition .living-archive-item:nth-child(9) { width: 54vw; left: -2vw; top: 36%; }
+  .living-archive.is-mobile-composition .living-archive-item:nth-child(10) { width: 30vw; left: 67vw; top: 12%; }
+  .living-archive.is-mobile-composition .living-archive-item:nth-child(11) { width: 58vw; left: 17vw; top: 25%; }
+  .living-archive.is-mobile-composition .living-archive-item:nth-child(12) { width: 38vw; left: 50vw; top: 51%; }
+
+  .living-archive.is-mobile-composition .living-archive-link {
+    position: absolute;
+    right: 6vw;
+    bottom: 28px;
+    margin: 0;
+    z-index: 50;
+  }
+
+  .living-archive.is-mobile-composition.is-mobile-animated .living-archive-item:nth-child(n) {
+    opacity: 0 !important;
+    pointer-events: none;
+    will-change: opacity, transform;
+  }
+
+  .living-archive.is-mobile-composition:not(.is-mobile-animated) .living-archive-item:nth-child(n) {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none;
+    will-change: auto;
   }
 }

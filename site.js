@@ -2,6 +2,64 @@
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+  const editorialIntro = document.querySelector('.editorial-intro');
+  const editorialIntroLogo = document.querySelector('.nav > .nav-logo');
+
+  if (editorialIntro && editorialIntroLogo && !reducedMotion.matches) {
+    let introSeen = false;
+
+    try {
+      introSeen = window.sessionStorage.getItem('umit-sural-intro-seen') === 'true';
+      if (!introSeen) window.sessionStorage.setItem('umit-sural-intro-seen', 'true');
+    } catch (error) {
+      introSeen = true;
+    }
+
+    if (!introSeen) {
+      const introSiblings = Array.from(document.body.children).filter((element) => element !== editorialIntro);
+      const logoParent = editorialIntroLogo.parentNode;
+      const logoNextSibling = editorialIntroLogo.nextSibling;
+      const lockedScrollKeys = new Set(['ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'End', 'Home', 'PageDown', 'PageUp', ' ']);
+      let introFinished = false;
+
+      const preventIntroScroll = (event) => {
+        event.preventDefault();
+      };
+
+      const preventIntroScrollKeys = (event) => {
+        if (lockedScrollKeys.has(event.key)) event.preventDefault();
+      };
+
+      editorialIntro.hidden = false;
+      editorialIntro.appendChild(editorialIntroLogo);
+      document.body.classList.add('is-intro-playing');
+      introSiblings.forEach((element) => {
+        element.inert = true;
+      });
+      window.addEventListener('wheel', preventIntroScroll, { passive: false });
+      window.addEventListener('touchmove', preventIntroScroll, { passive: false });
+      window.addEventListener('keydown', preventIntroScrollKeys);
+
+      const finishEditorialIntro = () => {
+        if (introFinished) return;
+        introFinished = true;
+
+        logoParent.insertBefore(editorialIntroLogo, logoNextSibling);
+        editorialIntro.remove();
+        document.body.classList.remove('is-intro-playing');
+        introSiblings.forEach((element) => {
+          element.inert = false;
+        });
+        window.removeEventListener('wheel', preventIntroScroll);
+        window.removeEventListener('touchmove', preventIntroScroll);
+        window.removeEventListener('keydown', preventIntroScrollKeys);
+      };
+
+      editorialIntro.addEventListener('animationend', finishEditorialIntro, { once: true });
+      window.setTimeout(finishEditorialIntro, 1400);
+    }
+  }
+
   if (finePointer.matches && !reducedMotion.matches) {
     const cursor = document.createElement('img');
     cursor.src = 'favicon.png';
@@ -97,6 +155,73 @@
     window.addEventListener('scroll', requestArchiveRender, { passive: true });
     window.addEventListener('resize', requestArchiveRender, { passive: true });
     requestArchiveRender();
+  }
+
+  const mobileArchiveComposition = archiveSection
+    && archiveItems.length
+    && window.matchMedia('(max-width: 600px)').matches;
+
+  if (mobileArchiveComposition) {
+    archiveSection.classList.add('is-mobile-composition');
+
+    archiveItems.forEach((item, index) => {
+      item.style.zIndex = String(index + 1);
+    });
+
+    if (!reducedMotion.matches) {
+      archiveSection.classList.add('is-mobile-animated');
+      let mobileArchiveActive = false;
+      let mobileArchiveTicking = false;
+
+      function mobileClamp(value, minimum = 0, maximum = 1) {
+        return Math.min(maximum, Math.max(minimum, value));
+      }
+
+      function mobileSmoothstep(edgeStart, edgeEnd, value) {
+        const progress = mobileClamp((value - edgeStart) / Math.max(0.001, edgeEnd - edgeStart));
+        return progress * progress * (3 - 2 * progress);
+      }
+
+      function renderMobileArchive() {
+        const rect = archiveSection.getBoundingClientRect();
+        const scrollDistance = Math.max(1, archiveSection.offsetHeight - window.innerHeight);
+        const progress = mobileClamp(-rect.top / scrollDistance);
+
+        archiveItems.forEach((item, index) => {
+          const start = 0.03 + index * 0.055;
+          const entrance = mobileSmoothstep(start, start + 0.18, progress);
+          const departure = mobileSmoothstep(0.84 + index * 0.006, 0.98, progress);
+          const direction = index % 2 === 0 ? -1 : 1;
+          const translateX = direction * (14 * (1 - entrance) + 8 * departure);
+          const translateY = 44 * (1 - entrance) - 18 * departure;
+          const scale = 0.98 + entrance * 0.02 - departure * 0.01;
+          const opacity = entrance * (1 - departure * 0.78);
+
+          item.style.setProperty('opacity', opacity.toFixed(3), 'important');
+          item.style.setProperty('transform', `translate3d(${translateX.toFixed(2)}px, ${translateY.toFixed(2)}px, 0) scale(${scale.toFixed(3)})`, 'important');
+          item.style.pointerEvents = opacity > 0.22 ? 'auto' : 'none';
+          item.tabIndex = opacity > 0.22 ? 0 : -1;
+        });
+
+        mobileArchiveTicking = false;
+      }
+
+      function requestMobileArchiveRender() {
+        if (!mobileArchiveActive || mobileArchiveTicking) return;
+
+        mobileArchiveTicking = true;
+        window.requestAnimationFrame(renderMobileArchive);
+      }
+
+      const mobileArchiveSectionObserver = new IntersectionObserver((entries) => {
+        mobileArchiveActive = entries[0].isIntersecting;
+        if (mobileArchiveActive) requestMobileArchiveRender();
+      }, { rootMargin: '20% 0px' });
+
+      mobileArchiveSectionObserver.observe(archiveSection);
+      window.addEventListener('scroll', requestMobileArchiveRender, { passive: true });
+      window.addEventListener('resize', requestMobileArchiveRender, { passive: true });
+    }
   }
 
   const artworkSliders = document.querySelectorAll('.artwork-slider');
