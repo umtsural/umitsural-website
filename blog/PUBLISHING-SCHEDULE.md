@@ -1,23 +1,23 @@
 # Studio Notes Publishing Schedule
 
-The first three articles publish on 28 July 2026. This documentation-only plan stages the remaining releases on Monday, Wednesday, and Friday.
+The first three articles published on 28 July 2026. The next three published together on 4 August 2026. The remaining releases continue on Monday, Wednesday, and Friday.
 
 ## 1. The Quiet Power of Collecting Emerging Artists in 2026
-- Proposed publication date: Wednesday, 29 July 2026
+- Published: 4 August 2026
 - Slug: `quiet-power-of-collecting-emerging-artists`
 - Category: Collecting Art
 - Related collection: [Protect Me](../protect-me.html)
 - Release checklist: remove `noindex, nofollow`; add to the Studio Notes index and `sitemap.xml`; activate contextual and Related Reading links; set the visible publication date; set matching `BlogPosting` `datePublished` and `dateModified`.
 
 ## 2. The Scale Problem: Choosing the Right Painting for High Ceilings
-- Proposed publication date: Friday, 31 July 2026
+- Published: 4 August 2026
 - Slug: `choosing-the-right-painting-for-high-ceilings`
 - Category: Art and Interiors
 - Related collection: [Space](../space.html)
 - Release checklist: remove `noindex, nofollow`; add to the Studio Notes index and `sitemap.xml`; activate contextual and Related Reading links; set the visible publication date; set matching `BlogPosting` `datePublished` and `dateModified`.
 
 ## 3. Curating the Subconscious: How Museums Are Reimagining Psychological Themes
-- Proposed publication date: Monday, 3 August 2026
+- Published: 4 August 2026
 - Slug: `curating-the-subconscious`
 - Category: Museums and Curating
 - Related collection: [Works](../works.html)
