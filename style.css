@@ -2156,3 +2156,104 @@ body {
     will-change: auto;
   }
 }
+
+
+/* ARTWORK SEO SUPPORT */
+.artwork-details {
+  display: grid;
+  gap: 10px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(28, 26, 23, 0.72);
+}
+
+.artwork-details div {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: 12px;
+}
+
+.artwork-details dt {
+  color: rgba(28, 26, 23, 0.5);
+}
+
+.artwork-details dd {
+  margin: 0;
+}
+
+.artwork-sequence {
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.artwork-sequence a:focus-visible,
+.artwork-related-card:focus-visible,
+.artwork-studio-note:focus-visible {
+  outline: 2px solid #4e7966;
+  outline-offset: 5px;
+}
+
+.artwork-related {
+  max-width: 1280px;
+  margin: 110px auto 0;
+}
+
+.artwork-related > h2 {
+  font-size: clamp(34px, 4vw, 54px);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.artwork-related-grid {
+  margin-top: 36px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 3vw, 42px);
+}
+
+.artwork-related-card {
+  min-width: 0;
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.artwork-related-card img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: contain;
+  background: rgba(28, 26, 23, 0.025);
+}
+
+.artwork-related-card span,
+.artwork-related-card small {
+  display: block;
+}
+
+.artwork-related-card span {
+  margin-top: 16px;
+  font-size: 13px;
+}
+
+.artwork-related-card small {
+  margin-top: 5px;
+  font-size: 11px;
+  color: rgba(28, 26, 23, 0.58);
+}
+
+.artwork-studio-note {
+  display: inline-block;
+  margin-top: 42px;
+}
+
+@media (max-width: 700px) {
+  .artwork-related {
+    margin-top: 78px;
+  }
+
+  .artwork-related-grid {
+    grid-template-columns: 1fr;
+    gap: 38px;
+  }
+}
