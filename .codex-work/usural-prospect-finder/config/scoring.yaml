@@ -1,0 +1,15 @@
+version: 1
+status: initial_defaults_not_calibrated
+modernization_gap: {enabled: true, max_score: 100}
+seo_gap: {enabled: true, max_score: 100}
+business_quality: {enabled: true, max_score: 100}
+commercial_capacity: {enabled: true, max_score: 100}
+contactability: {enabled: true, max_score: 100}
+opportunity:
+  weights:
+    modernization_gap: 0.30
+    seo_gap: 0.25
+    business_quality: 0.25
+    commercial_capacity: 0.10
+    contactability: 0.10
+  eligibility_gates: []

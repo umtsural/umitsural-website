@@ -1,0 +1,6 @@
+version: 1
+fingerprints:
+  wordpress:
+    html_contains: [wp-content, wp-includes]
+  jquery_migrate:
+    script_contains: [jquery-migrate]

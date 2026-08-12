@@ -1,0 +1,75 @@
+architects: &architects
+  canonical_key: architects
+  query_templates: ["{label} {location}"]
+  synonyms: {}
+  labels:
+    en: [architect, architecture studio, architectural practice]
+    es: [arquitecto, estudio de arquitectura]
+    ca: [arquitecte, estudi d'arquitectura]
+  quality_priorities: {portfolio: high, team: medium, projects: high}
+  opportunity_priorities: {website_redesign: high, seo: medium}
+lawyers:
+  canonical_key: lawyers
+  query_templates: ["{label} {location}"]
+  labels:
+    en: [law firm, lawyers, business lawyers, corporate lawyers, international law firm]
+    es: [abogados, bufete de abogados, despacho de abogados, abogados mercantiles]
+    ca: [advocats, despatx d'advocats]
+  synonyms:
+    en: [legal practice]
+    es: [firma legal]
+    ca: [bufet d'advocats]
+  quality_priorities: {team: high, expertise: high}
+  opportunity_priorities: {seo: high, website_redesign: medium}
+  classification_hints:
+    company_terms:
+      - law firm
+      - abogados
+      - advocats
+      - bufete
+      - bufet
+      - despacho
+      - despatx
+      - lawyers
+      - legal practice
+      - attorneys
+      - firma legal
+    company_domain_terms: [law, legal, abogado, advocat]
+    company_path_terms: [about, team, people, locations, offices, practice]
+  commercial_signals:
+    - multiple_practice_areas
+    - multiple_lawyers
+    - partners
+    - international_clients
+    - languages
+    - corporate_services
+    - commercial_law
+    - mergers_and_acquisitions
+    - tax
+    - employment
+    - litigation
+dentists:
+  canonical_key: dentists
+  query_templates: ["{label} {location}"]
+  synonyms: {}
+  labels: {en: [dentist, dental clinic], es: [dentista, clínica dental], ca: [dentista, clínica dental]}
+  quality_priorities: {reviews: high, services: high}
+  opportunity_priorities: {local_seo: high, website_redesign: medium}
+psychologists:
+  canonical_key: psychologists
+  query_templates: ["{label} {location}"]
+  synonyms: {}
+  labels: {en: [psychologist, psychology clinic], es: [psicólogo, psicóloga], ca: [psicòleg, psicòloga]}
+  quality_priorities: {expertise: high, contactability: high}
+  opportunity_priorities: {seo: high, website_redesign: medium}
+property_managers:
+  canonical_key: property_managers
+  query_templates: ["{label} {location}"]
+  synonyms: {}
+  labels: {en: [property manager], es: [administrador de fincas], ca: [administrador de finques]}
+  quality_priorities: {services: high, team: medium}
+  opportunity_priorities: {local_seo: high, website_redesign: high}
+interior_designers:
+  <<: *architects
+  canonical_key: interior_designers
+  labels: {en: [interior designer], es: [diseñador de interiores], ca: [dissenyador d'interiors]}

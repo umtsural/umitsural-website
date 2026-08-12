@@ -1,0 +1,40 @@
+version: 1
+status: INITIAL_UNCALIBRATED
+
+dimension_weights:
+  legacy_technology_risk: 0.30
+  front_end_modernity: 0.18
+  responsive_image_modernity: 0.20
+  performance_markup: 0.10
+  content_freshness: 0.12
+  technical_reliability: 0.10
+
+legacy_weights:
+  wordpress_alone: 3
+  jquery: 5
+  jquery_migrate: 18
+  page_builder: 18
+  slider: 10
+  excessive_scripts: 8
+  excessive_stylesheets: 8
+  migrate_builder_slider_interaction: 18
+
+thresholds:
+  excessive_scripts: 40
+  excessive_stylesheets: 20
+  weak_ratio: 0.35
+  strong_ratio: 0.75
+  high_redesign_need: 70
+  medium_redesign_need: 45
+  high_confidence: 0.65
+  medium_confidence: 0.40
+  high_min_groups: 3
+
+confidence:
+  base: 0.10
+  per_evidence_group: 0.10
+  per_page: 0.05
+  max_page_credit: 6
+  js_shell_penalty: 0.15
+  incomplete_audit_penalty: 0.25
+

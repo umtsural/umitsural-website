@@ -24,28 +24,28 @@ The first three articles published on 28 July 2026. The next three published tog
 - Release checklist: remove `noindex, nofollow`; add to the Studio Notes index and `sitemap.xml`; activate contextual and Related Reading links; set the visible publication date; set matching `BlogPosting` `datePublished` and `dateModified`.
 
 ## 4. What Barcelona Teaches an Artist About Light and Absence
-- Proposed publication date: Wednesday, 5 August 2026
+- Published: 5 August 2026
 - Slug: `barcelona-light-and-absence`
 - Category: Studio and Process
 - Related collection: [Space](../space.html)
 - Release checklist: remove `noindex, nofollow`; add to the Studio Notes index and `sitemap.xml`; activate contextual and Related Reading links; set the visible publication date; set matching `BlogPosting` `datePublished` and `dateModified`.
 
 ## 5. Red in Contemporary Art: Why Collectors Are Drawn to the Color of Memory
-- Proposed publication date: Friday, 7 August 2026
+- Published: 7 August 2026
 - Slug: `red-in-contemporary-art`
 - Category: Collecting Art
 - Related collection: [Muscle Memory](../muscle-memory.html)
 - Release checklist: remove `noindex, nofollow`; add to the Studio Notes index and `sitemap.xml`; activate contextual and Related Reading links; set the visible publication date; set matching `BlogPosting` `datePublished` and `dateModified`.
 
 ## 6. Epoxy and Acrylic: Why Mixed-Media Works Are Taking Over Luxury Interiors
-- Proposed publication date: Monday, 10 August 2026
+- Published: 10 August 2026
 - Slug: `epoxy-and-acrylic-in-luxury-interiors`
 - Category: Art and Interiors
 - Related collection: [Muscle Memory](../muscle-memory.html)
 - Release checklist: remove `noindex, nofollow`; add to the Studio Notes index and `sitemap.xml`; activate contextual and Related Reading links; set the visible publication date; set matching `BlogPosting` `datePublished` and `dateModified`.
 
 ## 7. From Studio to White Cube: What Curators Look for in Contemporary Sculpture
-- Proposed publication date: Wednesday, 12 August 2026
+- Published: 12 August 2026
 - Slug: `what-curators-look-for-in-contemporary-sculpture`
 - Category: Museums and Curating
 - Related collection: [Sculpture](../sculpture.html)

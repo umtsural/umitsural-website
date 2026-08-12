@@ -1,0 +1,48 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "usural-prospect-finder"
+dynamic = ["version"]
+description = "Evidence-driven prospect discovery and ranking foundation"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "httpx>=0.28,<1",
+    "typer>=0.15,<1",
+    "PyYAML>=6.0,<7",
+    "structlog>=25.1,<26",
+]
+
+[project.optional-dependencies]
+dev = ["mypy>=1.15", "pytest>=8.3", "pytest-cov>=6", "ruff>=0.11", "types-PyYAML>=6.0"]
+
+[project.scripts]
+prospect-finder = "usural_prospect_finder.main:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/usural_prospect_finder"]
+
+[tool.hatch.version]
+path = "src/usural_prospect_finder/__init__.py"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-markers --cov=usural_prospect_finder --cov-report=term-missing"
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+packages = ["usural_prospect_finder"]
+
+[[tool.mypy.overrides]]
+module = "yaml"
+ignore_missing_imports = true
