@@ -1,0 +1,223 @@
+:root {
+  color-scheme: dark;
+  font-family: "IBM Plex Mono", monospace;
+  background: #11100f;
+  color: #f5f0eb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #11100f;
+}
+
+.motion-study {
+  position: relative;
+  width: min(100vw, calc(100svh * 16 / 9));
+  aspect-ratio: 16 / 9;
+  max-height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.motion-canvas,
+.motion-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.motion-canvas {
+  z-index: 1;
+  display: block;
+  background: #11100f;
+}
+
+.motion-fallback {
+  z-index: 0;
+  object-fit: contain;
+}
+
+.motion-study.is-ready .motion-fallback {
+  visibility: hidden;
+}
+
+.study-label {
+  position: absolute;
+  z-index: 2;
+  top: 20px;
+  left: 22px;
+  display: flex;
+  gap: 22px;
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.55);
+  pointer-events: none;
+}
+
+.study-controls {
+  position: absolute;
+  z-index: 3;
+  right: 18px;
+  bottom: 18px;
+  width: min(270px, calc(100vw - 36px));
+  max-height: calc(100svh - 36px);
+  overflow-y: auto;
+  border: 1px solid rgba(245, 240, 235, 0.28);
+  background: rgba(17, 16, 15, 0.82);
+  backdrop-filter: blur(10px);
+  font-size: 10px;
+}
+
+.controls-toggle {
+  width: 100%;
+  padding: 11px 13px;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  letter-spacing: 0.04em;
+  text-align: left;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.controls-body {
+  display: grid;
+  gap: 12px;
+  padding: 4px 13px 13px;
+}
+
+.study-controls.is-collapsed .controls-body {
+  display: none;
+}
+
+.controls-body label {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 5px 12px;
+  color: rgba(245, 240, 235, 0.78);
+}
+
+.controls-body output {
+  color: #f5f0eb;
+}
+
+.scene-status {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  color: rgba(245, 240, 235, 0.54);
+}
+
+.scene-status output {
+  max-width: 145px;
+  text-align: right;
+}
+
+.controls-body input {
+  grid-column: 1 / -1;
+  width: 100%;
+  margin: 0;
+  accent-color: #f5f0eb;
+}
+
+.controls-body select {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-width: 0;
+  padding: 6px;
+  border: 1px solid rgba(245, 240, 235, 0.25);
+  border-radius: 0;
+  color: #f5f0eb;
+  background: #11100f;
+  font: inherit;
+}
+
+.controls-body .orientation-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.controls-body .orientation-control input {
+  width: auto;
+}
+
+.performance-readout {
+  margin: 2px 0 0;
+  color: rgba(245, 240, 235, 0.5);
+}
+
+.control-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.control-actions button {
+  min-height: 32px;
+  border: 1px solid rgba(245, 240, 235, 0.25);
+  color: rgba(245, 240, 235, 0.82);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.control-actions [data-action="grid"] {
+  grid-column: 1 / -1;
+}
+
+.control-actions button:hover,
+.control-actions button:focus-visible,
+.control-actions button[aria-pressed="true"] {
+  border-color: rgba(245, 240, 235, 0.75);
+  color: #11100f;
+  background: #f5f0eb;
+  outline: none;
+}
+
+@media (max-width: 600px) {
+  .study-label {
+    top: 14px;
+    left: 14px;
+    gap: 12px;
+    font-size: 9px;
+  }
+
+  .study-controls {
+    right: 10px;
+    bottom: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-canvas {
+    display: none;
+  }
+
+  .motion-fallback {
+    z-index: 1;
+    visibility: visible !important;
+  }
+
+  .study-controls {
+    display: none;
+  }
+}

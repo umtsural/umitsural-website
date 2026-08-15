@@ -52,28 +52,28 @@ The first three articles published on 28 July 2026. The next three published tog
 - Release checklist: remove `noindex, nofollow`; add to the Studio Notes index and `sitemap.xml`; activate contextual and Related Reading links; set the visible publication date; set matching `BlogPosting` `datePublished` and `dateModified`.
 
 ## 8. Painting the Invisible: How Epoxy Resin Captures What the Eye Cannot Hold
-- Proposed publication date: Friday, 14 August 2026
+- Published: 14 August 2026
 - Slug: `painting-the-invisible-with-epoxy-resin`
 - Category: Studio and Process
 - Related collection: [Muscle Memory](../muscle-memory.html)
 - Release checklist: remove `noindex, nofollow`; add to the Studio Notes index and `sitemap.xml`; activate contextual and Related Reading links; set the visible publication date; set matching `BlogPosting` `datePublished` and `dateModified`.
 
 ## 9. Building an Art Collection That Feels Like Home
-- Proposed publication date: Monday, 17 August 2026
+- Published: 17 August 2026
 - Slug: `building-an-art-collection-that-feels-like-home`
 - Category: Collecting Art
 - Related collection: [Works](../works.html)
 - Release checklist: remove `noindex, nofollow`; add to the Studio Notes index and `sitemap.xml`; activate contextual and Related Reading links; set the visible publication date; set matching `BlogPosting` `datePublished` and `dateModified`.
 
 ## 10. Minimalist Spaces, Maximalist Art: The Tension That Defines Modern Design
-- Proposed publication date: Wednesday, 19 August 2026
+- Published: 19 August 2026
 - Slug: `minimalist-spaces-maximalist-art`
 - Category: Art and Interiors
 - Related collection: [Red Jungle](../red-jungle.html)
 - Release checklist: remove `noindex, nofollow`; add to the Studio Notes index and `sitemap.xml`; activate contextual and Related Reading links; set the visible publication date; set matching `BlogPosting` `datePublished` and `dateModified`.
 
 ## 11. The Body in Contemporary Art: Why Muscle Memory Is a Universal Museum Language
-- Proposed publication date: Friday, 21 August 2026
+- Published: 21 August 2026
 - Slug: `body-in-contemporary-art-muscle-memory`
 - Category: Museums and Curating
 - Related collection: [Muscle Memory](../muscle-memory.html)

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Muscle Memory — Motion Study</title>
+  <link rel="icon" href="../favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="muscle-memory-motion.css">
+</head>
+<body>
+  <main class="motion-study">
+    <canvas class="motion-canvas" aria-label="Animated study of Nomad Pet from the Muscle Memory collection"></canvas>
+    <img class="motion-fallback" src="../assets/images/muscle-memory/factory-farmed-consciousness-main.webp" alt="Factory-Farmed Consciousness from the Muscle Memory collection by Ümit Sural">
+
+    <header class="study-label" aria-hidden="true">
+      <span>Muscle Memory</span>
+      <span>Motion Study 01</span>
+    </header>
+
+    <aside class="study-controls" aria-label="Prototype controls">
+      <button class="controls-toggle" type="button" aria-expanded="true">Study controls</button>
+      <div class="controls-body">
+        <p class="scene-status">Current artwork <output data-scene="current">Factory-Farmed Consciousness</output></p>
+        <p class="scene-status">Next artwork <output data-scene="next">Fear Pushes Hope</output></p>
+        <label>Scene duration <output data-output="sceneDuration">8.5s</output><input name="sceneDuration" type="range" min="7" max="10" step="0.5" value="8.5"></label>
+        <label>Stillness duration <output data-output="stillness">1.6s</output><input name="stillness" type="range" min="1" max="2.5" step="0.1" value="1.6"></label>
+        <label>Mapping intensity <output data-output="intensity">0.78</output><input name="intensity" type="range" min="0" max="1.4" step="0.05" value="0.78"></label>
+        <label>UV displacement <output data-output="displacement">0.075</output><input name="displacement" type="range" min="0" max="0.14" step="0.005" value="0.075"></label>
+        <label>Stretch <output data-output="stretch">0.38</output><input name="stretch" type="range" min="0" max="0.7" step="0.05" value="0.38"></label>
+        <label>Region count <output data-output="regions">8 × 7</output><input name="regions" type="range" min="4" max="12" step="1" value="8"></label>
+        <label>Transition duration <output data-output="transitionDuration">2.6s</output><input name="transitionDuration" type="range" min="1.5" max="4" step="0.1" value="2.6"></label>
+        <label>Transition softness <output data-output="softness">0.18</output><input name="softness" type="range" min="0.04" max="0.35" step="0.01" value="0.18"></label>
+        <label class="orientation-control">Horizontal orientation <input name="horizontal" type="checkbox" checked></label>
+        <div class="control-actions">
+          <button type="button" data-action="play">Pause</button>
+          <button type="button" data-action="reset">Reset</button>
+          <button type="button" data-action="previous">Previous scene</button>
+          <button type="button" data-action="next">Next scene</button>
+          <button type="button" data-action="grid" aria-pressed="false">Show UV grid</button>
+        </div>
+        <p class="performance-readout" aria-live="off">WebGL initializing</p>
+      </div>
+    </aside>
+  </main>
+  <script src="muscle-memory-motion.js"></script>
+</body>
+</html>

@@ -224,6 +224,302 @@
     }
   }
 
+  const collectionGrids = document.querySelectorAll('.collection-grid');
+
+  if (collectionGrids.length) {
+    function updateCollectionGrid(grid) {
+      const verticalGap = parseFloat(window.getComputedStyle(grid).getPropertyValue('--collection-row-gap')) || 0;
+      const items = Array.from(grid.querySelectorAll('.collection-work'));
+
+      grid.classList.remove('is-masonry');
+      items.forEach((item) => {
+        item.style.gridRowEnd = 'auto';
+      });
+
+      const itemHeights = items.map((item) => item.getBoundingClientRect().height);
+      grid.classList.add('is-masonry');
+
+      items.forEach((item, index) => {
+        item.style.gridRowEnd = `span ${Math.ceil(itemHeights[index] + verticalGap)}`;
+      });
+    }
+
+    function updateAllCollectionGrids() {
+      window.requestAnimationFrame(() => {
+        collectionGrids.forEach(updateCollectionGrid);
+      });
+    }
+
+    collectionGrids.forEach((grid) => {
+      grid.querySelectorAll('img').forEach((image) => {
+        if (!image.complete) image.addEventListener('load', updateAllCollectionGrids, { once: true });
+      });
+    });
+
+    window.addEventListener('load', updateAllCollectionGrids);
+    window.addEventListener('resize', updateAllCollectionGrids, { passive: true });
+    updateAllCollectionGrids();
+  }
+
+  const artworkMedia = document.querySelectorAll('.artwork-slider, .artwork-single');
+
+  if (artworkMedia.length) {
+    const viewer = document.createElement('div');
+    viewer.className = 'artwork-viewer';
+    viewer.hidden = true;
+    viewer.setAttribute('role', 'dialog');
+    viewer.setAttribute('aria-modal', 'true');
+    viewer.setAttribute('aria-label', 'Artwork detail viewer');
+    viewer.innerHTML = `
+      <div class="artwork-viewer-bar">
+        <button type="button" data-viewer-action="out" aria-label="Zoom out">−</button>
+        <button type="button" data-viewer-action="reset" aria-label="Reset zoom">100%</button>
+        <button type="button" data-viewer-action="in" aria-label="Zoom in">+</button>
+        <button type="button" class="artwork-viewer-close" data-viewer-action="close" aria-label="Close artwork detail viewer">Close ×</button>
+      </div>
+      <div class="artwork-viewer-stage">
+        <img class="artwork-viewer-image" alt="" draggable="false">
+      </div>`;
+    document.body.appendChild(viewer);
+
+    const viewerStage = viewer.querySelector('.artwork-viewer-stage');
+    const viewerImage = viewer.querySelector('.artwork-viewer-image');
+    const viewerReset = viewer.querySelector('[data-viewer-action="reset"]');
+    const viewerClose = viewer.querySelector('[data-viewer-action="close"]');
+    const activePointers = new Map();
+    let viewerScale = 1;
+    let viewerX = 0;
+    let viewerY = 0;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let dragOriginX = 0;
+    let dragOriginY = 0;
+    let pinchStartDistance = 0;
+    let pinchStartScale = 1;
+    let pointerMoved = false;
+    let viewerTrigger = null;
+
+    function clampViewerPan() {
+      if (viewerScale <= 1) {
+        viewerX = 0;
+        viewerY = 0;
+        return;
+      }
+
+      const maximumX = Math.max(0, (viewerImage.offsetWidth * viewerScale - viewerStage.clientWidth) / 2);
+      const maximumY = Math.max(0, (viewerImage.offsetHeight * viewerScale - viewerStage.clientHeight) / 2);
+      viewerX = Math.min(maximumX, Math.max(-maximumX, viewerX));
+      viewerY = Math.min(maximumY, Math.max(-maximumY, viewerY));
+    }
+
+    function renderViewerTransform() {
+      clampViewerPan();
+      viewerImage.style.transform = `translate3d(${viewerX}px, ${viewerY}px, 0) scale(${viewerScale})`;
+      viewerReset.textContent = `${Math.round(viewerScale * 100)}%`;
+      viewerStage.classList.toggle('is-pannable', viewerScale > 1);
+    }
+
+    function setViewerScale(nextScale) {
+      viewerScale = Math.min(4, Math.max(1, nextScale));
+      renderViewerTransform();
+    }
+
+    function resetViewerTransform() {
+      viewerScale = 1;
+      viewerX = 0;
+      viewerY = 0;
+      renderViewerTransform();
+    }
+
+    function openArtworkViewer(image) {
+      viewerTrigger = image;
+      viewerImage.src = image.currentSrc || image.src;
+      viewerImage.alt = image.alt;
+      resetViewerTransform();
+      viewer.hidden = false;
+      document.body.classList.add('artwork-viewer-open');
+      viewerClose.focus();
+    }
+
+    function closeArtworkViewer() {
+      if (viewer.hidden) return;
+      viewer.hidden = true;
+      viewerImage.removeAttribute('src');
+      document.body.classList.remove('artwork-viewer-open');
+      activePointers.clear();
+      if (viewerTrigger) viewerTrigger.focus();
+      viewerTrigger = null;
+    }
+
+    function updateZoomableImages(container) {
+      const images = container.querySelectorAll('img');
+      images.forEach((image) => {
+        const isAvailable = container.classList.contains('artwork-single') || image.classList.contains('active');
+        image.tabIndex = isAvailable ? 0 : -1;
+        if (isAvailable) {
+          image.setAttribute('role', 'button');
+          image.setAttribute('aria-label', `${image.alt}. View detail`);
+        } else {
+          image.removeAttribute('role');
+          image.removeAttribute('aria-label');
+        }
+      });
+    }
+
+    artworkMedia.forEach((container) => {
+      container.classList.add('is-zoomable');
+      const hint = document.createElement('span');
+      hint.className = 'artwork-zoom-hint';
+      hint.setAttribute('aria-hidden', 'true');
+      hint.textContent = 'View detail +';
+      container.appendChild(hint);
+      updateZoomableImages(container);
+
+      container.addEventListener('click', (event) => {
+        const image = event.target.closest('img');
+        if (!image || image.tabIndex !== 0) return;
+        openArtworkViewer(image);
+      });
+
+      container.addEventListener('keydown', (event) => {
+        if (!event.target.matches('img[role="button"]')) return;
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openArtworkViewer(event.target);
+        }
+      });
+
+      if (container.classList.contains('artwork-slider')) {
+        const observer = new MutationObserver(() => updateZoomableImages(container));
+        observer.observe(container, { attributes: true, subtree: true, attributeFilter: ['class'] });
+      }
+    });
+
+    viewer.addEventListener('click', (event) => {
+      const action = event.target.closest('[data-viewer-action]')?.dataset.viewerAction;
+      if (action === 'close') closeArtworkViewer();
+      if (action === 'in') setViewerScale(viewerScale + 0.5);
+      if (action === 'out') setViewerScale(viewerScale - 0.5);
+      if (action === 'reset') resetViewerTransform();
+      if (event.target === viewerStage && !pointerMoved) closeArtworkViewer();
+    });
+
+    viewerStage.addEventListener('wheel', (event) => {
+      event.preventDefault();
+      setViewerScale(viewerScale + (event.deltaY < 0 ? 0.25 : -0.25));
+    }, { passive: false });
+
+    viewerStage.addEventListener('pointerdown', (event) => {
+      pointerMoved = false;
+      activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      viewerStage.setPointerCapture(event.pointerId);
+
+      if (activePointers.size === 1) {
+        dragStartX = event.clientX;
+        dragStartY = event.clientY;
+        dragOriginX = viewerX;
+        dragOriginY = viewerY;
+        viewerStage.classList.toggle('is-dragging', viewerScale > 1);
+      } else if (activePointers.size === 2) {
+        const points = Array.from(activePointers.values());
+        pinchStartDistance = Math.hypot(points[1].x - points[0].x, points[1].y - points[0].y);
+        pinchStartScale = viewerScale;
+      }
+    });
+
+    viewerStage.addEventListener('pointermove', (event) => {
+      if (!activePointers.has(event.pointerId)) return;
+      activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+      if (activePointers.size === 2) {
+        const points = Array.from(activePointers.values());
+        const distance = Math.hypot(points[1].x - points[0].x, points[1].y - points[0].y);
+        if (Math.abs(distance - pinchStartDistance) > 2) pointerMoved = true;
+        setViewerScale(pinchStartScale * distance / Math.max(1, pinchStartDistance));
+      } else if (viewerScale > 1) {
+        if (Math.abs(event.clientX - dragStartX) > 2 || Math.abs(event.clientY - dragStartY) > 2) pointerMoved = true;
+        viewerX = dragOriginX + event.clientX - dragStartX;
+        viewerY = dragOriginY + event.clientY - dragStartY;
+        renderViewerTransform();
+      }
+    });
+
+    function releaseViewerPointer(event) {
+      activePointers.delete(event.pointerId);
+      viewerStage.classList.remove('is-dragging');
+      if (activePointers.size === 1) {
+        const point = Array.from(activePointers.values())[0];
+        dragStartX = point.x;
+        dragStartY = point.y;
+        dragOriginX = viewerX;
+        dragOriginY = viewerY;
+      }
+    }
+
+    viewerStage.addEventListener('pointerup', releaseViewerPointer);
+    viewerStage.addEventListener('pointercancel', releaseViewerPointer);
+    window.addEventListener('resize', renderViewerTransform, { passive: true });
+
+    document.addEventListener('keydown', (event) => {
+      if (viewer.hidden) return;
+      if (event.key === 'Escape') closeArtworkViewer();
+      if (event.key === '+' || event.key === '=') setViewerScale(viewerScale + 0.5);
+      if (event.key === '-') setViewerScale(viewerScale - 0.5);
+      if (event.key === '0') resetViewerTransform();
+      if (event.key === 'Tab') {
+        const controls = Array.from(viewer.querySelectorAll('button'));
+        const firstControl = controls[0];
+        const lastControl = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === firstControl) {
+          event.preventDefault();
+          lastControl.focus();
+        } else if (!event.shiftKey && document.activeElement === lastControl) {
+          event.preventDefault();
+          firstControl.focus();
+        }
+      }
+    });
+  }
+
+  const collectionRails = document.querySelectorAll('.blog-collections');
+
+  if (collectionRails.length) {
+    const railObserver = 'IntersectionObserver' in window
+      ? new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            entry.target.classList.toggle('is-offscreen', !entry.isIntersecting);
+          });
+        }, { rootMargin: '20% 0px' })
+      : null;
+
+    collectionRails.forEach((rail) => {
+      const viewport = rail.querySelector('.blog-collections-viewport');
+      let resumeTimer;
+
+      function pauseRail() {
+        window.clearTimeout(resumeTimer);
+        rail.classList.add('is-interacting');
+      }
+
+      function resumeRailLater() {
+        window.clearTimeout(resumeTimer);
+        resumeTimer = window.setTimeout(() => {
+          rail.classList.remove('is-interacting');
+        }, 1400);
+      }
+
+      viewport.addEventListener('pointerdown', pauseRail, { passive: true });
+      viewport.addEventListener('pointerup', resumeRailLater, { passive: true });
+      viewport.addEventListener('pointercancel', resumeRailLater, { passive: true });
+      viewport.addEventListener('scroll', () => {
+        pauseRail();
+        resumeRailLater();
+      }, { passive: true });
+
+      if (railObserver) railObserver.observe(rail);
+    });
+  }
+
   const artworkSliders = document.querySelectorAll('.artwork-slider');
 
   if (artworkSliders.length) {
