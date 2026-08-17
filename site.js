@@ -224,6 +224,49 @@
     }
   }
 
+  const selectedWorkTracks = document.querySelectorAll('[data-work-track]');
+
+  selectedWorkTracks.forEach((track) => {
+    const indicator = track.parentElement.querySelector('.work-scroll-indicator');
+    if (!indicator) return;
+
+    let indicatorFrame = 0;
+    let userInteracted = false;
+
+    const updateIndicator = () => {
+      const scrollRange = track.scrollHeight - track.clientHeight;
+      const progress = scrollRange > 0 ? track.scrollTop / scrollRange : 0;
+      indicator.style.setProperty('--work-scroll-progress', String(Math.min(1, Math.max(0, progress))));
+      indicatorFrame = 0;
+    };
+
+    const requestIndicatorUpdate = () => {
+      if (!indicatorFrame) indicatorFrame = window.requestAnimationFrame(updateIndicator);
+    };
+
+    const stopIndicatorHint = () => {
+      if (userInteracted) return;
+      userInteracted = true;
+      indicator.classList.remove('is-hinting');
+      requestIndicatorUpdate();
+    };
+
+    track.addEventListener('scroll', requestIndicatorUpdate, { passive: true });
+    track.addEventListener('wheel', stopIndicatorHint, { passive: true });
+    track.addEventListener('touchstart', stopIndicatorHint, { passive: true });
+    track.addEventListener('keydown', stopIndicatorHint);
+
+    updateIndicator();
+
+    if (!reducedMotion.matches && finePointer.matches && window.matchMedia('(min-width: 901px)').matches) {
+      const hintDelay = document.body.classList.contains('is-intro-playing') ? 1450 : 150;
+      window.setTimeout(() => {
+        if (!userInteracted) indicator.classList.add('is-hinting');
+      }, hintDelay);
+      indicator.addEventListener('animationend', () => indicator.classList.remove('is-hinting'), { once: true });
+    }
+  });
+
   const collectionGrids = document.querySelectorAll('.collection-grid');
 
   if (collectionGrids.length) {
