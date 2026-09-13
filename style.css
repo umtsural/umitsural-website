@@ -78,8 +78,41 @@ a {
   justify-content: space-between;
   align-items: center;
   background: #f5f0eb;
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(28, 26, 23, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.48);
+  box-shadow: inset 0 -1px 0 rgba(28, 26, 23, 0.055), 0 6px 22px rgba(28, 26, 23, 0.025);
+  transition: background-color 0.28s ease, box-shadow 0.28s ease;
+  isolation: isolate;
+}
+
+.nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(ellipse 42% 140% at 74% -35%, rgba(255, 255, 255, 0.3), transparent 70%);
+  opacity: 0.34;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+}
+
+.nav.is-scrolled {
+  box-shadow: inset 0 -1px 0 rgba(28, 26, 23, 0.07), 0 8px 28px rgba(28, 26, 23, 0.045);
+}
+
+.nav.is-scrolled::before {
+  opacity: 0.58;
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .nav {
+    background: rgba(245, 240, 235, 0.64);
+    -webkit-backdrop-filter: blur(20px) saturate(138%);
+    backdrop-filter: blur(20px) saturate(138%);
+  }
+
+  .nav.is-scrolled {
+    background: rgba(245, 240, 235, 0.74);
+  }
 }
 
 .nav-logo {
@@ -183,6 +216,38 @@ body.is-intro-playing {
   padding-bottom: 7px;
 }
 
+.living-archive-link {
+  isolation: isolate;
+}
+
+.living-archive-link::before {
+  content: "";
+  position: absolute;
+  inset: -8px -10px;
+  z-index: -1;
+  border: 1px solid rgba(255, 255, 255, 0.48);
+  border-radius: 2px;
+  background-color: rgba(245, 240, 235, 0.9);
+  background-image: radial-gradient(circle at 76% 0%, rgba(255, 255, 255, 0.3), transparent 68%);
+  box-shadow: inset 0 0 0 1px rgba(28, 26, 23, 0.045), 0 4px 14px rgba(28, 26, 23, 0.025);
+  opacity: 0.2;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.living-archive-link:hover::before,
+.living-archive-link:focus-visible::before {
+  opacity: 0.62;
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .living-archive-link::before {
+    background-color: rgba(245, 240, 235, 0.64);
+    -webkit-backdrop-filter: blur(16px) saturate(138%);
+    backdrop-filter: blur(16px) saturate(138%);
+  }
+}
+
 /* HOME HERO */
 
 .hero {
@@ -199,10 +264,12 @@ body.is-intro-playing {
 }
 
 .hero h1 {
-  font-size: clamp(46px, 5.8vw, 88px);
-  line-height: 0.92;
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: clamp(44px, 5.4vw, 80px);
+  line-height: 1.04;
   font-weight: 400;
-  letter-spacing: -0.036em;
+  letter-spacing: 0.002em;
+  color: #343432;
   margin-bottom: 32px;
 }
 
@@ -324,9 +391,11 @@ body.is-intro-playing {
 
 .work-info strong {
   font-family: "EB Garamond", Georgia, serif;
-  font-size: 19px;
-  line-height: 1.1;
+  font-size: 20px;
+  line-height: 1.25;
   font-weight: 400;
+  letter-spacing: 0.002em;
+  color: #343432;
 }
 
 .work-info small {
@@ -383,6 +452,28 @@ body.is-intro-playing {
     transform: translateY(-50%);
     pointer-events: none;
     transition: opacity 0.25s ease;
+    isolation: isolate;
+  }
+
+  .works .work-scroll-indicator::after {
+    content: "";
+    position: absolute;
+    inset: -5px -4px;
+    z-index: -1;
+    border: 1px solid rgba(255, 255, 255, 0.48);
+    border-radius: 2px;
+    background-color: rgba(245, 240, 235, 0.9);
+    background-image: radial-gradient(circle at 72% 8%, rgba(255, 255, 255, 0.3), transparent 68%);
+    box-shadow: inset 0 0 0 1px rgba(28, 26, 23, 0.045), 0 4px 14px rgba(28, 26, 23, 0.025);
+    pointer-events: none;
+  }
+
+  @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+    .works .work-scroll-indicator::after {
+      background-color: rgba(245, 240, 235, 0.64);
+      -webkit-backdrop-filter: blur(16px) saturate(138%);
+      backdrop-filter: blur(16px) saturate(138%);
+    }
   }
 
   .works .work-scroll-indicator::before {
@@ -530,10 +621,13 @@ body.is-intro-playing {
 }
 
 .about-right h2 {
-  font-size: clamp(36px, 3.05vw, 43px);
-  line-height: 1.08;
+  max-width: 720px;
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: clamp(32px, 2.9vw, 42px);
+  line-height: 1.22;
   font-weight: 400;
-  letter-spacing: -0.018em;
+  letter-spacing: 0;
+  color: #343432;
   margin-bottom: 34px;
 }
 
@@ -850,7 +944,7 @@ body.is-intro-playing {
 
 .artwork-layout {
   display: grid;
-  grid-template-columns: minmax(220px, 1fr) minmax(0, 3.5fr);
+  grid-template-columns: minmax(320px, 1.25fr) minmax(0, 3fr);
   gap: clamp(24px, 2.5vw, 48px);
   align-items: start;
 }
@@ -880,7 +974,7 @@ body.is-intro-playing {
 
 .artwork-text {
   margin-top: 28px;
-  max-width: 320px;
+  max-width: 440px;
 }
 
 .artwork-navigation {
@@ -953,6 +1047,10 @@ body.artwork-viewer-open {
 }
 
 .artwork-viewer {
+  --viewer-glass-surface: rgba(245, 240, 235, 0.64);
+  --viewer-glass-border: rgba(255, 255, 255, 0.48);
+  --viewer-glass-highlight: rgba(255, 255, 255, 0.3);
+  --viewer-glass-shadow: inset 0 0 0 1px rgba(28, 26, 23, 0.055), 0 4px 14px rgba(28, 26, 23, 0.025);
   position: fixed;
   z-index: 10000;
   inset: 0;
@@ -975,19 +1073,31 @@ body.artwork-viewer-open {
   justify-content: flex-end;
   gap: 8px;
   padding-bottom: 14px;
+  opacity: 0.58;
+  transition: opacity 0.24s ease;
+}
+
+.artwork-viewer-bar:hover,
+.artwork-viewer-bar:focus-within {
+  opacity: 1;
 }
 
 .artwork-viewer button {
   min-width: 44px;
   min-height: 44px;
   padding: 8px 12px;
-  border: 1px solid rgba(28, 26, 23, 0.42);
+  border: 1px solid var(--viewer-glass-border);
   border-radius: 0;
   color: inherit;
-  background: transparent;
+  background-color: var(--viewer-glass-surface);
+  background-image: radial-gradient(circle at 72% 8%, var(--viewer-glass-highlight), transparent 64%);
+  -webkit-backdrop-filter: blur(20px) saturate(138%);
+  backdrop-filter: blur(20px) saturate(138%);
+  box-shadow: var(--viewer-glass-shadow);
   font-family: "IBM Plex Mono", monospace;
   font-size: 11px;
   cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .artwork-viewer button:hover,
@@ -996,6 +1106,13 @@ body.artwork-viewer-open {
   border-color: #1c1a17;
   background: #1c1a17;
   outline: none;
+}
+
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .artwork-viewer button {
+    background-color: rgba(247, 245, 240, 0.94);
+    background-image: none;
+  }
 }
 
 .artwork-viewer-close {
@@ -1035,6 +1152,22 @@ body.artwork-viewer-open {
 }
 
 @media (max-width: 600px) {
+  .nav {
+    box-shadow: inset 0 -1px 0 rgba(28, 26, 23, 0.055), 0 4px 16px rgba(28, 26, 23, 0.02);
+  }
+
+  @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+    .nav {
+      background: rgba(245, 240, 235, 0.76);
+      -webkit-backdrop-filter: blur(12px) saturate(124%);
+      backdrop-filter: blur(12px) saturate(124%);
+    }
+
+    .nav.is-scrolled {
+      background: rgba(245, 240, 235, 0.82);
+    }
+  }
+
   .artwork-viewer {
     padding: 10px;
   }
@@ -1051,6 +1184,23 @@ body.artwork-viewer-open {
   .artwork-zoom-hint {
     top: 10px;
     right: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav,
+  .nav::before,
+  .artwork-viewer-bar,
+  .artwork-viewer button,
+  .living-archive-link::before,
+  .work-scroll-indicator {
+    transition: none;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .artwork-viewer-bar {
+    opacity: 0.9;
   }
 }
 
@@ -1492,8 +1642,8 @@ body.artwork-viewer-open {
   }
 
   .about-right h2 {
-    font-size: clamp(31px, 4.45vw, 36px);
-    line-height: 1.1;
+    font-size: clamp(30px, 4.6vw, 37px);
+    line-height: 1.22;
   }
 
   .about-right p {
@@ -1573,7 +1723,7 @@ body.artwork-viewer-open {
   }
 
   .hero h1 {
-    font-size: 46px;
+    font-size: 45px;
   }
 
   .about-right p {
@@ -1587,8 +1737,8 @@ body.artwork-viewer-open {
   }
 
   .about-right h2 {
-    font-size: clamp(26px, 7.2vw, 31px);
-    line-height: 1.1;
+    font-size: clamp(28px, 7.4vw, 32px);
+    line-height: 1.22;
   }
 
   .about-content h1 {
@@ -2442,10 +2592,12 @@ body {
 
 .living-archive-heading h2 {
   margin-top: 14px;
-  font-size: clamp(54px, 7vw, 104px);
-  line-height: 0.92;
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: clamp(52px, 6.5vw, 92px);
+  line-height: 1.03;
   font-weight: 400;
-  letter-spacing: -0.045em;
+  letter-spacing: 0;
+  color: #343432;
 }
 
 .living-archive-field {
@@ -2917,10 +3069,11 @@ body {
 }
 
 .artwork-related-card img {
-  width: 100%;
-  aspect-ratio: 4 / 5;
+  width: auto;
+  max-width: 100%;
+  max-height: clamp(400px, 35vw, 540px);
+  height: auto;
   object-fit: contain;
-  background: rgba(28, 26, 23, 0.025);
 }
 
 .artwork-related-card span,
@@ -2952,5 +3105,10 @@ body {
   .artwork-related-grid {
     grid-template-columns: 1fr;
     gap: 38px;
+  }
+
+  .artwork-related-card img {
+    width: 100%;
+    max-height: none;
   }
 }

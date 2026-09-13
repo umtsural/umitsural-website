@@ -4,6 +4,23 @@
 
   const editorialIntro = document.querySelector('.editorial-intro');
   const editorialIntroLogo = document.querySelector('.nav > .nav-logo');
+  const siteNav = document.querySelector('.nav');
+
+  if (siteNav) {
+    let navFrame = 0;
+
+    const updateNavGlass = () => {
+      siteNav.classList.toggle('is-scrolled', window.scrollY > 16);
+      navFrame = 0;
+    };
+
+    const requestNavGlassUpdate = () => {
+      if (!navFrame) navFrame = window.requestAnimationFrame(updateNavGlass);
+    };
+
+    window.addEventListener('scroll', requestNavGlassUpdate, { passive: true });
+    updateNavGlass();
+  }
 
   if (editorialIntro && editorialIntroLogo && !reducedMotion.matches) {
     let introSeen = false;
