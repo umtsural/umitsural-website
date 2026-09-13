@@ -944,7 +944,7 @@ body.is-intro-playing {
 
 .artwork-layout {
   display: grid;
-  grid-template-columns: minmax(320px, 1.25fr) minmax(0, 3fr);
+  grid-template-columns: minmax(500px, 1.25fr) minmax(0, 3fr);
   gap: clamp(24px, 2.5vw, 48px);
   align-items: start;
 }
@@ -963,7 +963,7 @@ body.is-intro-playing {
 }
 
 .artwork-meta {
-  margin-top: 42px;
+  margin-top: 84px;
 }
 
 .artwork-meta p {
@@ -974,7 +974,7 @@ body.is-intro-playing {
 
 .artwork-text {
   margin-top: 28px;
-  max-width: 440px;
+  max-width: 500px;
 }
 
 .artwork-navigation {
